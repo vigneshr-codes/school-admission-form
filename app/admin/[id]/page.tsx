@@ -95,7 +95,7 @@ export default async function AdmissionDetailPage({ params }: { params: Promise<
             <div className="mb-6 border-b pb-4">
               <h2 className="text-xl font-semibold text-gray-800 mb-3">Siblings in School</h2>
               <div className="space-y-3">
-                {admission.siblings.map((sibling, index) => (
+                {admission.siblings.map((sibling: any, index: number) => (
                   <div key={sibling.id} className="bg-gray-50 p-4 rounded">
                     <h3 className="font-medium text-gray-700 mb-2">Sibling {index + 1}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
@@ -181,7 +181,7 @@ export default async function AdmissionDetailPage({ params }: { params: Promise<
               <div>
                 <h3 className="font-medium text-gray-700 mb-3">Vaccinations</h3>
                 <div className="space-y-3">
-                  {admission.vaccinations.map((vacc, index) => (
+                  {admission.vaccinations.map((vacc: any, index: number) => (
                     <div key={vacc.id} className="bg-gray-50 p-4 rounded">
                       <h4 className="font-medium text-gray-700 mb-2">Vaccination {index + 1}</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
