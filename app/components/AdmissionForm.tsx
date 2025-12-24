@@ -21,7 +21,7 @@ const admissionSchema = z.object({
   studentFullName: z.string().min(1, 'Student name is required'),
   dateOfBirth: z.string().min(1, 'Date of birth is required'),
   gender: z.string().min(1, 'Gender is required'),
-  nationality: z.string().default('Indian'),
+  nationality: z.string().min(1, 'Nationality is required'),
   religion: z.string().optional(),
   casteCategory: z.string().min(1, 'Caste category is required'),
   subCaste: z.string().optional(),
@@ -43,7 +43,7 @@ const admissionSchema = z.object({
   yearOfPassingLastClass: z.string().optional(),
   marksPercentageLastExam: z.string().optional(),
 
-  isRejoining: z.boolean().default(false),
+  isRejoining: z.boolean(),
   previousRollNumber: z.string().optional(),
   yearStandardWhenLeft: z.string().optional(),
   reasonForLeaving: z.string().optional(),
@@ -51,7 +51,7 @@ const admissionSchema = z.object({
   extracurricularInterests: z.string().optional(),
 
   // Section 4
-  hasSiblingsInSchool: z.boolean().default(false),
+  hasSiblingsInSchool: z.boolean(),
   siblings: z.array(z.object({
     name: z.string().min(1, 'Sibling name is required'),
     classGrade: z.string().min(1, 'Class/Grade is required'),
@@ -85,7 +85,7 @@ const admissionSchema = z.object({
   emergencyContactMobile: z.string().optional(),
 
   // Section 6
-  transportRequired: z.boolean().default(false),
+  transportRequired: z.boolean(),
   pickupDropLocation: z.string().optional(),
   medicalHistoryOrAllergies: z.string().optional(),
   vaccinations: z.array(z.object({
