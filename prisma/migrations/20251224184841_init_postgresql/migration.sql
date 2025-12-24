@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "Admission" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "schoolBranch" TEXT NOT NULL,
     "purposeOfForm" TEXT NOT NULL,
     "academicYear" TEXT NOT NULL,
@@ -57,10 +57,7 @@ CREATE TABLE "Admission" (
     "emergencyContactMobile" TEXT,
     "transportRequired" BOOLEAN NOT NULL DEFAULT false,
     "pickupDropLocation" TEXT,
-    "modeOfTransport" TEXT,
     "medicalHistoryOrAllergies" TEXT,
-    "vaccinationStatus" BOOLEAN NOT NULL DEFAULT true,
-    "vaccinationDetails" TEXT,
     "declarationAccepted" BOOLEAN NOT NULL DEFAULT false,
     "birthCertificate" TEXT,
     "aadhaarCardStudent" TEXT,
@@ -68,16 +65,35 @@ CREATE TABLE "Admission" (
     "transferCertificate" TEXT,
     "casteCertificate" TEXT,
     "studentPhoto" TEXT,
-    "addressProof" TEXT
+    "addressProof" TEXT,
+
+    CONSTRAINT "Admission_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Sibling" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "admissionId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "classGrade" TEXT NOT NULL,
     "rollNumber" TEXT,
     "branch" TEXT NOT NULL,
-    CONSTRAINT "Sibling_admissionId_fkey" FOREIGN KEY ("admissionId") REFERENCES "Admission" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+
+    CONSTRAINT "Sibling_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "Vaccination" (
+    "id" TEXT NOT NULL,
+    "admissionId" TEXT NOT NULL,
+    "vaccineName" TEXT NOT NULL,
+    "vaccinationDate" TEXT NOT NULL,
+
+    CONSTRAINT "Vaccination_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Sibling" ADD CONSTRAINT "Sibling_admissionId_fkey" FOREIGN KEY ("admissionId") REFERENCES "Admission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Vaccination" ADD CONSTRAINT "Vaccination_admissionId_fkey" FOREIGN KEY ("admissionId") REFERENCES "Admission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
