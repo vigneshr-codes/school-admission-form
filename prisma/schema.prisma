@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admission {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Section 1: Basic Information
+  schoolBranch   String
+  purposeOfForm  String
+  academicYear   String
+
+  // Section 2: Student's Personal Details
+  studentFullName              String
+  dateOfBirth                  String
+  gender                       String
+  nationality                  String  @default("Indian")
+  religion                     String?
+  casteCategory                String
+  subCaste                     String?
+  aadhaarNumber                String
+  bloodGroup                   String?
+  identificationMarks          String?
+  specialNeedsOrDisabilities   String?
+  currentResidentialAddress    String
+  permanentAddress             String?
+
+  // Section 3: Academic Details
+  admissionType                String // New Admission / Existing Student / Re-Admission
+  currentLastStandard          String?
+  currentLastSection           String?
+  standardApplyingFor          String
+  previousSchoolName           String?
+  previousSchoolAddress        String?
+  lastClassAttended            String?
+  yearOfPassingLastClass       String?
+  marksPercentageLastExam      String?
+
+  // Re-admission fields
+  isRejoining                  Boolean @default(false)
+  previousRollNumber           String?
+  yearStandardWhenLeft         String?
+  reasonForLeaving             String?
+  reasonForRejoining           String?
+
+  extracurricularInterests     String?
+
+  // Section 4: Sibling Details
+  hasSiblingsInSchool          Boolean @default(false)
+  siblings                     Sibling[]
+
+  // Section 5: Parent/Guardian Details
+  fatherFullName               String
+  fatherOccupation             String
+  fatherAnnualIncome           String?
+  fatherMobileNumber           String
+  fatherEmail                  String?
+  fatherAadhaarNumber          String?
+
+  motherFullName               String
+  motherOccupation             String
+  motherAnnualIncome           String?
+  motherMobileNumber           String
+  motherEmail                  String?
+  motherAadhaarNumber          String?
+
+  guardianName                 String?
+  guardianRelation             String?
+  guardianOccupation           String?
+  guardianMobileNumber         String?
+  guardianAadhaarNumber        String?
+
+  emergencyContactName         String?
+  emergencyContactRelation     String?
+  emergencyContactMobile       String?
+
+  // Section 6: Transport and Other Options
+  transportRequired            Boolean @default(false)
+  pickupDropLocation           String?
+  medicalHistoryOrAllergies    String?
+  vaccinations                 Vaccination[]
+
+  // Declaration
+  declarationAccepted          Boolean @default(false)
+
+  // File uploads (storing file paths)
+  birthCertificate             String?
+  aadhaarCardStudent           String?
+  aadhaarCardParents           String?
+  transferCertificate          String?
+  casteCertificate             String?
+  studentPhoto                 String?
+  addressProof                 String?
+}
+
+model Sibling {
+  id              String   @id @default(cuid())
+  admissionId     String
+  admission       Admission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+
+  name            String
+  classGrade      String
+  rollNumber      String?
+  branch          String
+}
+
+model Vaccination {
+  id              String   @id @default(cuid())
+  admissionId     String
+  admission       Admission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+
+  vaccineName     String
+  vaccinationDate String
+}

@@ -24,3 +24,41 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Darker text for input fields and dropdowns */
+input,
+textarea,
+select {
+  color: #1f2937 !important;
+}
+
+/* Darker placeholder text for better visibility */
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+/* Dropdown options */
+select option {
+  color: #1f2937 !important;
+  background-color: white !important;
+}
